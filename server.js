@@ -29,7 +29,7 @@ var server = http.createServer(function (request, response) {
     <!DOCTYPE html>
     <html>
     <head>
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/style">
     </head>
     <body>
         <h1>我是杨英书,我出现了吗？</h1>
@@ -37,11 +37,24 @@ var server = http.createServer(function (request, response) {
     </html>
     `);
     response.end();
-  } else if (path === "/style.css") {
+  }
+  // else if (path === "/style.css") {
+  //   response.statusCode = 200;
+  //   response.setHeader("Content-Type", "text/css;charset=utf-8");
+  //   response.write(`body{color:red;}`);
+  //   response.end();
+  // }
+  else if (path === "/style") {
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/css;charset=utf-8");
-    response.write(`body{color:red;}`);
-    response.end();
+    fs.readFile("./style.css", function (error, data) {
+      if (!error) {
+        response.write(data);
+        response.end();
+      } else {
+        console.log(error);
+      }
+    });
   } else {
     response.statusCode = 404;
     response.setHeader("Content-Type", "text/html;charset=utf-8");
